@@ -1,0 +1,17 @@
+name: Trigger Tennis Rankings Crawl
+
+on:
+  schedule:
+    # Every Monday at 5pm UTC (12pm EST)
+    - cron: '0 17 * * 1'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  trigger-crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Fly.io Crawl
+        run: |
+          curl -X POST \
+            -H "x-api-key: ${{ secrets.CRON_SECRET }}" \
+            https://tennis-api.fly.dev/trigger-crawl
